@@ -29,6 +29,7 @@ fn main() {
     match num {
         1 => one::run(path),
         2 => two::run(path),
+        3 => three::run(path),
         _ => eprintln!("Not a valid day"),
     }
 }
