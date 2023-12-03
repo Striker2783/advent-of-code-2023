@@ -1,4 +1,4 @@
-use std::{fs, path::Path};
+use std::{collections::HashMap, fs, path::Path};
 
 pub fn run(path: &Path) {
     let content = match fs::read_to_string(path) {
@@ -12,6 +12,52 @@ pub fn run(path: &Path) {
     println!("Star 1: {}", games.solve_one());
     println!("Star 2: {}", games.solve_two());
 }
+
+fn cleaner(input: &str) -> (u32, u32) {
+    let max = {
+        let mut map = HashMap::new();
+        map.insert("red", 12);
+        map.insert("green", 13);
+        map.insert("blue", 14);
+        map
+    };
+    let mut one = 0;
+    let mut two = 0;
+    for line in input.lines() {
+        let mut split1 = line.split(": ");
+        let num: u32 = split1
+            .next()
+            .unwrap()
+            .split(' ')
+            .nth(1)
+            .unwrap()
+            .parse()
+            .unwrap();
+        let mut map = HashMap::new();
+        for m in split1.next().unwrap().split("; ") {
+            for b in m.split(", ") {
+                let mut split = b.split(' ');
+                let num: u32 = split.next().unwrap().parse().unwrap();
+                let color = split.next().unwrap();
+                map.insert(color, (**map.get(&color).get_or_insert(&u32::MIN)).max(num));
+            }
+        }
+        let mut okay = true;
+        let mut mins = 1;
+        for (color, n) in map {
+            if *max.get(color).unwrap() < n {
+                okay = false;
+            }
+            mins *= n;
+        }
+        if okay {
+            one += num;
+        }
+        two += mins;
+    }
+    (one, two)
+}
+
 #[derive(Debug, Default)]
 struct Games {
     games: Vec<Game>,
