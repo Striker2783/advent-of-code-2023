@@ -51,6 +51,41 @@ fn calibration_two(line: &str) -> u32 {
     first * 10 + last
 }
 
+fn first_naive(input: &str) -> u32 {
+    let mut sum = 0;
+    for line in input.lines() {
+        let mut nums = vec![];
+        for char in line.chars() {
+            if let Some(n) = char.to_digit(10) {
+                nums.push(n)
+            }
+        }
+        sum += nums[0] * 10 + nums.last().unwrap();
+    }
+    sum
+}
+
+fn second_naive(input: &str) -> u32 {
+    let mut sum = 0;
+    for line in input.lines() {
+        let mut nums = vec![];
+        for (i, char) in line.chars().enumerate() {
+            if let Some(n) = char.to_digit(10) {
+                nums.push(n);
+                continue;
+            }
+            for (j, word_num) in NUMBERS.iter().enumerate() {
+                if !line[i..].starts_with(word_num) {
+                    continue;
+                }
+                nums.push(j as u32);
+            }
+        }
+        sum += nums[0] * 10 + nums.last().unwrap();
+    }
+    sum
+}
+
 fn first(input: &str) -> u32 {
     input.lines().map(calibration).sum()
 }
