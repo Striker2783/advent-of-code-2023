@@ -67,8 +67,6 @@ impl Games {
         let mut new = Self::default();
         for line in content.lines() {
             let value = Game::parse_line(line);
-            // println!("{line}");
-            // println!("{value:?}");
             new.games.push(value);
         }
         new
