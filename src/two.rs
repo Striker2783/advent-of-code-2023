@@ -1,7 +1,7 @@
-use std::fs;
+use std::{fs, path::Path};
 
-pub fn run() {
-    let content = match fs::read_to_string("files/2.txt") {
+pub fn run(path: &Path) {
+    let content = match fs::read_to_string(path) {
         Ok(a) => a,
         Err(e) => {
             println!("{e}");

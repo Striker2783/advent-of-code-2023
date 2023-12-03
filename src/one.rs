@@ -1,11 +1,11 @@
-use std::fs;
+use std::{fs, path::Path};
 
 const NUMBERS: [&str; 10] = [
     "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
 ];
 
-pub fn run() {
-    let string = match fs::read_to_string("files/1.txt") {
+pub fn run(path: &Path) {
+    let string = match fs::read_to_string(path) {
         Ok(s) => s,
         Err(e) => {
             println!("{e}");
