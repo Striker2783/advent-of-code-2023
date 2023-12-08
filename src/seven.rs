@@ -1,3 +1,4 @@
+use num::integer::lcm;
 use std::{fs, path::Path};
 pub fn run(path: &Path) {
     let content = match fs::read_to_string(path) {
