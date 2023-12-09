@@ -1,15 +1,10 @@
-use std::{borrow::BorrowMut, collections::HashMap, fs, path::Path};
+use std::{borrow::BorrowMut, collections::HashMap, error::Error, fs, path::Path};
 
-pub fn run(path: &Path) {
-    let contents = match fs::read_to_string(path) {
-        Ok(a) => a,
-        Err(_) => {
-            println!("Input a file");
-            return;
-        }
-    };
+pub fn run(path: &Path) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(path)?;
     println!("Star 1: {}", solve_one(&contents));
     println!("Star 2: {}", solve_two(&contents));
+    Ok(())
 }
 
 fn is_adjacent(i: usize, j: usize, chars: &[&[u8]]) -> bool {

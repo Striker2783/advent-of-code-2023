@@ -1,13 +1,11 @@
-use std::{collections::HashMap, fs, path::Path};
+use std::{collections::HashMap, error::Error, fs, path::Path};
 
-pub fn run(file: &Path) {
-    let content = match fs::read_to_string(file) {
-        Ok(c) => c,
-        Err(e) => return,
-    };
+pub fn run(file: &Path) -> Result<(), Box<dyn Error>> {
+    let content = fs::read_to_string(file)?;
     let input = Input::parse(&content);
     println!("Star 1: {}", input.solve_one());
     println!("Star 2: {}", input.solve_two());
+    Ok(())
 }
 #[derive(Debug)]
 enum Direction {

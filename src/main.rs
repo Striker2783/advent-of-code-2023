@@ -26,7 +26,7 @@ fn main() {
         }
     };
     let path = Path::new(&file);
-    match num {
+    let e = match num {
         1 => one::run(path),
         2 => two::run(path),
         3 => three::run(path),
@@ -35,6 +35,13 @@ fn main() {
         6 => six::run(path),
         7 => seven::run(path),
         8 => eight::run(path),
-        _ => eprintln!("Not a valid day"),
+        9 => nine::run(path),
+        _ => {
+            eprintln!("Not a valid day");
+            return;
+        }
+    };
+    if let Err(e) = e {
+        eprintln!("{e}");
     }
 }

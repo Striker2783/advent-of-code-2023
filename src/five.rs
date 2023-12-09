@@ -1,16 +1,11 @@
-use std::{fs, path::Path, str::Lines};
+use std::{error::Error, fs, path::Path, str::Lines};
 
-pub fn run(file: &Path) {
-    let contents = match fs::read_to_string(file) {
-        Ok(a) => a,
-        Err(e) => {
-            eprintln!("{e}");
-            return;
-        }
-    };
+pub fn run(file: &Path) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(file)?;
     let maps = Maps::parse(&contents);
     println!("Star 1: {}", maps.solve_one());
     println!("Star 2: {}", maps.solve_two_naive());
+    Ok(())
 }
 #[derive(Default, Debug)]
 struct Maps {

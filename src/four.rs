@@ -1,15 +1,10 @@
-use std::{fs, path::Path};
+use std::{error::Error, fs, path::Path};
 
-pub fn run(path: &Path) {
-    let contents = match fs::read_to_string(path) {
-        Ok(a) => a,
-        Err(e) => {
-            eprintln!("{e}");
-            return;
-        }
-    };
+pub fn run(path: &Path) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(path)?;
     println!("Star 1: {}", solve_one(&contents));
     println!("Star 2: {}", solve_two(&contents));
+    Ok(())
 }
 
 fn solve_one(input: &str) -> u32 {

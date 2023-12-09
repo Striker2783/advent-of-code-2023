@@ -1,19 +1,14 @@
-use std::{fs, path::Path};
+use std::{error::Error, fs, path::Path};
 
 const NUMBERS: [&str; 10] = [
     "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
 ];
 
-pub fn run(path: &Path) {
-    let string = match fs::read_to_string(path) {
-        Ok(s) => s,
-        Err(e) => {
-            println!("{e}");
-            return;
-        }
-    };
+pub fn run(path: &Path) -> Result<(), Box<dyn Error>> {
+    let string = fs::read_to_string(path)?;
     println!("First star: {}", first(&string));
     println!("Second star: {}", second(&string));
+    Ok(())
 }
 
 fn calibration(line: &str) -> u32 {

@@ -1,17 +1,11 @@
-use num::integer::lcm;
-use std::{fs, path::Path};
-pub fn run(path: &Path) {
-    let content = match fs::read_to_string(path) {
-        Ok(a) => a,
-        Err(e) => {
-            eprintln!("{e}");
-            return;
-        }
-    };
+use std::{error::Error, fs, path::Path};
+pub fn run(path: &Path) -> Result<(), Box<dyn Error>> {
+    let content = fs::read_to_string(path)?;
     let match_list = MatchList::parse(&content);
 
     println!("Star 1: {}", match_list.solve_one());
     println!("Star 2: {}", match_list.solve_two());
+    Ok(())
 }
 #[derive(Default, Debug)]
 struct MatchList {

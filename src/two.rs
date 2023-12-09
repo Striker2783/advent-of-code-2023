@@ -1,16 +1,11 @@
-use std::{collections::HashMap, fs, path::Path};
+use std::{collections::HashMap, error::Error, fs, path::Path};
 
-pub fn run(path: &Path) {
-    let content = match fs::read_to_string(path) {
-        Ok(a) => a,
-        Err(e) => {
-            println!("{e}");
-            return;
-        }
-    };
+pub fn run(path: &Path) -> Result<(), Box<dyn Error>> {
+    let content = fs::read_to_string(path)?;
     let games = Games::parse(&content);
     println!("Star 1: {}", games.solve_one());
     println!("Star 2: {}", games.solve_two());
+    Ok(())
 }
 
 fn cleaner(input: &str) -> (u32, u32) {

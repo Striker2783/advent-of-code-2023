@@ -1,15 +1,10 @@
-use std::{fs, path::Path, vec};
-pub fn run(file: &Path) {
-    let contents = match fs::read_to_string(file) {
-        Ok(a) => a,
-        Err(e) => {
-            eprintln!("{e}");
-            return;
-        }
-    };
+use std::{error::Error, fs, path::Path};
+pub fn run(file: &Path) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(file)?;
     let a = Records::parse(&contents);
     println!("Star 1: {}", a.solve_one());
     println!("Star 2: {}", a.solve_two());
+    Ok(())
 }
 #[derive(Debug, Default)]
 struct Records {
