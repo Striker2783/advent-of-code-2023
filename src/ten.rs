@@ -60,9 +60,6 @@ impl Input {
             println!("{x:?}");
         }
     }
-    /**
-     * Does not work and I give up
-     */
     fn solve_two(&self) -> u64 {
         let mut new_thing = vec![vec![Direction::Ground; self.0[0].len()]; self.0.len()];
         let start = self.get_start();
@@ -73,7 +70,6 @@ impl Input {
             new_thing[curr.0 .0][curr.0 .1] = self.0[curr.0 .0][curr.0 .1];
             curr = a;
         }
-        Self::pretty(&self.0);
         new_thing[curr.0 .0][curr.0 .1] = self.0[curr.0 .0][curr.0 .1];
         new_thing
             .iter()
@@ -85,11 +81,14 @@ impl Input {
                         if **d != Direction::Ground {
                             return false;
                         }
-                        (j..x.len())
+                        (0..j)
                             .filter(|k| {
                                 matches!(
                                     x[*k],
-                                    Direction::Vertical | Direction::TopRight | Direction::TopLeft
+                                    // Direction::Vertical | Direction::TopRight | Direction::TopLeft
+                                    Direction::Vertical
+                                        | Direction::BottomLeft
+                                        | Direction::BottomRight
                                 )
                             })
                             .count()
