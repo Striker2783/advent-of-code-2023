@@ -38,6 +38,7 @@ fn main() {
         9 => nine::run(path),
         10 => ten::run(path),
         11 => eleven::run(path),
+        12 => twelve::run(path),
         _ => {
             eprintln!("Not a valid day");
             return;
