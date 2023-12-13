@@ -36,12 +36,10 @@ impl Matrix {
     fn get_score_two(&self) -> u64 {
         let row = (0..(self.0.len() - 1)).find(|i| self.is_horizontal_reflection_two(*i));
         if let Some(r) = row {
-            println!("row {}", r);
             return (r as u64 + 1) * 100;
         }
         let column = (0..(self.0[0].len())).find(|i| self.is_vertical_reflection_two(*i));
         if let Some(c) = column {
-            println!("column {}", c);
             return c as u64 + 1;
         }
         0
